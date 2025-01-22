@@ -1,34 +1,41 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "../../../utils/prisma";
 
 export default NextAuth({
-  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text", placeholder: "you@example.com" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-        });
+        console.log("Authorize function called");
 
-        if (user && user.password === credentials.password) {
-          return user;
+        // Senha fixa para o sistema interno
+        const SYSTEM_PASSWORD = "12345"; // Substitua pela senha desejada
+
+        if (!credentials?.password) {
+          console.log("Password is missing");
+          throw new Error("Password is required");
         }
+
+        // Simula um usuário fixo
+        if (credentials.password === SYSTEM_PASSWORD) {
+          console.log("User authenticated");
+          return { id: 1, name: "Admin", email: "admin@example.com" };
+        }
+
+        console.log("Invalid password");
         return null;
       },
     }),
   ],
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
   session: {
     strategy: "jwt",
+    maxAge: 15 * 60, // 15 minutos
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -44,5 +51,5 @@ export default NextAuth({
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || "default-secret",
 });

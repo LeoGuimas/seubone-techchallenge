@@ -2,9 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/recortes/create": "pages/recortes/create.js",
-  "/": "pages/index.js",
-  "/api/recortes": "pages/api/recortes.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
-  "/recortes": "pages/recortes.js"
+  "/login": "pages/login.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js"
 }

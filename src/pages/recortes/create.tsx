@@ -49,11 +49,27 @@ const CreateRecortePage = () => {
         <input name="nomeModelo" placeholder="Nome do Modelo" onChange={handleChange} />
         <input name="ordemExibicao" type="number" placeholder="Ordem de Exibição" onChange={handleChange} />
         <input name="sku" placeholder="SKU" onChange={handleChange} />
-        <input name="tipoRecorte" placeholder="Tipo do Recorte" onChange={handleChange} />
+        <select name="tipoRecorte" onChange={handleChange}>
+          <option value="">Selecione o Tipo do Recorte</option>
+          <option value="frente">Frente</option>
+          <option value="aba">Aba</option>
+          <option value="lateral">Lateral</option>
+        </select>
         <input name="posicaoRecorte" placeholder="Posição do Recorte" onChange={handleChange} />
-        <input name="tipoProduto" placeholder="Tipo do Produto" onChange={handleChange} />
-        <input name="materialRecorte" placeholder="Material do Recorte" onChange={handleChange} />
-        <input name="corMaterial" placeholder="Cor do Material" onChange={handleChange} />
+        <select name="tipoProduto" onChange={handleChange}>
+          <option value="">Selecione o Modelo</option>
+          <option value="Trucker">Trucker</option>
+          <option value="Americano">Americano</option>
+        </select>
+        <select name="materialRecorte" onChange={handleChange}>
+          <option value="">Selecione o Tecido</option>
+          <option value="Linho">Linho</option>
+        </select>
+        <select name="corMaterial" onChange={handleChange}>
+          <option value="">Selecione a Cor do Tecido</option>
+          <option value="Azul marinho">Azul marinho</option>
+          <option value="Laranja">Laranja</option>
+        </select>
         <input name="linkImagem" placeholder="Link da Imagem" onChange={handleChange} />
         <button type="submit">Criar</button>
       </form>

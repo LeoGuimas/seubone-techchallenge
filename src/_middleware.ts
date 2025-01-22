@@ -3,17 +3,19 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token = req.cookies.get('next-auth.session-token');
 
-  // Allow the requests if the following is true...
-  // 1) It's a request for next-auth session & provider fetching
-  // 2) the token exists
+  // Obtenha o token do cookie
+  const token = req.cookies.get('next-auth.session-token')?.value;
+
+  // Permitir requisições:
+  // 1. Para autenticação (rota `/api/auth`)
+  // 2. Se o token JWT estiver presente
   if (pathname.startsWith('/api/auth') || token) {
     return NextResponse.next();
   }
 
-  // Redirect them to login if they don't have a token AND are requesting a protected route
-  if (!token && pathname !== '/login') {
+  // Redirecione para `/login` se não houver token e o usuário estiver tentando acessar rota protegida
+  if (!token && pathname.startsWith('/recortes')) {
     return NextResponse.redirect(new URL('/login', req.url));
   }
 }

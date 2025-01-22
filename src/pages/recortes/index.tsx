@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import AuthWrapper from '../../components/AuthWrapper';
 
 const RecortesPage = () => {
   const [recortes, setRecortes] = useState([]);
@@ -11,23 +12,25 @@ const RecortesPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Recortes</h1>
-      <Link href="/recortes/create">Criar Recorte</Link>
-      <ul>
-        {recortes.map((recorte) => (
-          <li key={recorte.id}>
-            {recorte.nomeModelo} - {recorte.sku}
-            <Link href={`/recortes/edit/${recorte.id}`}>Editar</Link>
-            <button onClick={() => handleDelete(recorte.id)}>Excluir</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <AuthWrapper>
+      <div>
+        <h1>Recortes</h1>
+        <Link href="/recortes/create">Criar Recorte</Link>
+        <ul>
+          {recortes.map((recorte) => (
+            <li key={recorte.id}>
+              {recorte.nomeModelo} - {recorte.sku}
+              <Link href={`/recortes/edit/${recorte.id}`}>Editar</Link>
+              <button onClick={() => handleDelete(recorte.id)}>Excluir</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </AuthWrapper>
   );
 
   function handleDelete(id) {
-    fetch('/api/recortes', {
+    fetch(`/api/recortes/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
